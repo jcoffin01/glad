@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.15)
 
 # Silence warning about PROJECT_VERSION
 cmake_policy(SET CMP0048 NEW)
@@ -9,29 +9,17 @@ cmake_policy(SET CMP0042 NEW)
 # Allow "IN_LIST" in "IF()"
 cmake_policy(SET CMP0057 NEW)
 
-if(NOT CMAKE_VERSION VERSION_LESS 3.1)
-  # Silence warning about if()
-  cmake_policy(SET CMP0054 NEW)
-endif()
+cmake_policy(SET CMP0054 NEW)
 
-if(CMAKE_VERSION VERSION_GREATER 3.8)
-  # Enable IPO for CMake versions that support it
-  cmake_policy(SET CMP0069 NEW)
-endif()
+cmake_policy(SET CMP0069 NEW)
 
 project(GLAD VERSION 0.1.36 LANGUAGES C)
 
 set(GLAD_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
 # Find the python interpreter, set the PYTHON_EXECUTABLE variable
-if (CMAKE_VERSION VERSION_LESS 3.12)
-    # this logic is deprecated in CMake after 3.12
-    find_package(PythonInterp REQUIRED)
-else()
-    # the new hotness.  This will preferentially find Python3 instead of Python2
-    find_package(Python)
-    set(PYTHON_EXECUTABLE ${Python_EXECUTABLE})
-endif()
+find_package(Python)
+set(PYTHON_EXECUTABLE ${Python_EXECUTABLE})
 
 # Options
 set(GLAD_OUT_DIR "${CMAKE_CURRENT_BINARY_DIR}" CACHE STRING "Output directory")
